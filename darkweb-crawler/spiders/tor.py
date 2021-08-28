@@ -32,6 +32,7 @@ class TorSpider(RedisSpider):
         last_response = history[-1]["response"]
 
         requested_url = response.url.strip("/")
+        requested_url = requested_url.replace("///", "//")
         url = last_response["url"].strip("/")
         scheme = self.helper.get_scheme(url)
         domain = self.helper.get_domain(url)
