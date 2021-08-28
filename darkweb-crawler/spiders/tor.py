@@ -27,12 +27,13 @@ class TorSpider(RedisSpider):
     def make_requests_from_url(self, url):
         return TorHelper.build_splash_request(url, callback=self.parse)
 
-    def parse(self, response):
+    def parse(self, response, **kwargs):
         history = response.data['history']
         last_response = history[-1]["response"]
 
         requested_url = response.url.strip("/")
         requested_url = requested_url.replace("///", "//")
+
         url = last_response["url"].strip("/")
         scheme = self.helper.get_scheme(url)
         domain = self.helper.get_domain(url)
@@ -64,13 +65,7 @@ class TorSpider(RedisSpider):
             item['title'] = soup_rendered.title.string.strip() \
                 if soup_rendered.title and soup_rendered.title.string else ""
             item['scheme'] = scheme
-
-            base_url = scheme + "://" + domain
-            item["homepage"] = base_url == requested_url
-            self.logger.info("######################################")
-            self.logger.info(requested_url)
-            self.logger.info(item["homepage"])
-
+            item["homepage"] = self.helper.is_home_page(requested_url)
             item['urls'] = urls
             item["version"] = 3 if len(domain.replace(".onion", "")) > 16 else 2
             item["response_header"] = headers
