@@ -66,9 +66,9 @@ class TorSpider(RedisSpider):
 
             base_url = scheme + "://" + domain
             item["homepage"] = base_url == requested_url
-            print("######################################")
-            print(requested_url)
-            print(item["homepage"])
+            self.logger.info("######################################")
+            self.logger.info(requested_url)
+            self.logger.info(item["homepage"])
 
             item['urls'] = urls
             item["version"] = 3 if len(domain.replace(".onion", "")) > 16 else 2
