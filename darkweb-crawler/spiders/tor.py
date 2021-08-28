@@ -27,7 +27,7 @@ class TorSpider(RedisSpider):
     def make_requests_from_url(self, url):
         return TorHelper.build_splash_request(url, callback=self.parse)
 
-    def parse(self, response, **kwargs):
+    def parse(self, response):
         history = response.data['history']
         last_response = history[-1]["response"]
 
@@ -66,6 +66,9 @@ class TorSpider(RedisSpider):
 
             base_url = scheme + "://" + domain
             item["homepage"] = base_url == requested_url
+            print("######################################")
+            print(requested_url)
+            print(item["homepage"])
 
             item['urls'] = urls
             item["version"] = 3 if len(domain.replace(".onion", "")) > 16 else 2
