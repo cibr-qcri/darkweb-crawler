@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: darkweb-crawler-deployment
+  labels:
+    app: darkweb-crawler
+    tier: crawler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: darkweb-crawler
+      tier: crawler
+  template:
+    metadata:
+      labels:
+        app: darkweb-crawler
+        tier: crawler
+    spec:
+      containers:
+        - name: darkweb-crawler
+          image: "{{ .Values.darkweb.image.name }}:{{ .Values.darkweb.image.tag }}"
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: darkweb-crawler
+              mountPath: /mnt/data
+          {{- if .Values.elasticsearch_ip }}
+          env:
+            - name: elasticsearchIP
+              value: {{ .Values.elasticsearch_ip }}
+          {{- end }}
+      volumes:
+        - name: darkweb-crawler
+          persistentVolumeClaim:
+            claimName: darkweb-crawler-pv-claim

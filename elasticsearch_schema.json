@@ -1,0 +1,111 @@
+{
+  "mappings": {
+    "properties": {
+      "info": {
+        "properties": {
+          "domain": {
+            "type": "keyword"
+          },
+          "external_links": {
+            "properties": {
+              "href_urls": {
+                "type": "object"
+              }
+            }
+          },
+          "external_urls": {
+            "properties": {
+              "href_urls": {
+                "properties": {
+                  "tor": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  },
+                  "web": {
+                    "type": "text",
+                    "fields": {
+                      "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "raw_data": {
+            "type": "text"
+          },
+          "tags": {
+            "properties": {
+              "cryptocurrency": {
+                "properties": {
+                  "address": {
+                    "properties": {
+                      "btc": {
+                        "type": "text",
+                        "fields": {
+                          "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "hidden_service": {
+                "properties": {
+                  "landing_page": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          },
+          "title": {
+            "type": "keyword"
+          },
+          "url": {
+            "type": "keyword"
+          }
+        }
+      },
+      "method": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "source": {
+        "type": "keyword"
+      },
+      "summary": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "timestamp": {
+        "type": "date",
+        "format": "epoch_millis"
+      },
+      "type": {
+        "type": "keyword"
+      }
+    }
+  }
+}
