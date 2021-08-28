@@ -64,6 +64,12 @@ class TorSpider(RedisSpider):
                 if soup_rendered.title and soup_rendered.title.string else ""
             item['scheme'] = scheme
             item["homepage"] = self.helper.is_home_page(requested_url)
+
+            print('###########################################')
+            print(url)
+            print(requested_url)
+            print(self.helper.is_home_page(requested_url))
+
             item['urls'] = urls
             item["version"] = 3 if len(domain.replace(".onion", "")) > 16 else 2
             item["response_header"] = headers
